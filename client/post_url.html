@@ -1,0 +1,9 @@
+<template name='postURL'>
+    <div id='url' class="input-group">
+        <span id='protocol' class="input-group-addon">{{#if protocol}}{{protocol}}//{{/if}}</span>
+        <input id='url_input' type="text" class="form-control" placeholder="填入网址!" value='{{hostname}}'/>
+      <span class="input-group-btn">
+        <button id='search' class="btn btn-default" type="button">录入</button>
+      </span>
+    </div>
+</template>
