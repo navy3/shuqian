@@ -33,8 +33,15 @@ function post(url, data){
 function add(id, bookmarks){
     post("http://0.0.0.0:3000/add", JSON.stringify(bookmarks));
 }
-chrome.bookmarks.onMoved.addListener(show);
-chrome.bookmarks.onRemoved.addListener(show);
+function remove(id, bookmarks){
+    bookmarks.id=id;
+    post("http://0.0.0.0:3000/remove", JSON.stringify(bookmarks));
+}
+function update(id, bookmarks){
+    post("http://0.0.0.0:3000/update", JSON.stringify(bookmarks));
+}
+chrome.bookmarks.onRemoved.addListener(remove);
 chrome.bookmarks.onCreated.addListener(add);
 //只有title和url改变时会触发
-chrome.bookmarks.onChanged.addListener(show);
+///chrome.bookmarks.onChanged.addListener(update);
+//chrome.bookmarks.onMoved.addListener(update);

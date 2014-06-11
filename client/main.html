@@ -1,3 +1,5 @@
+
+<template name="main">
 <head>
 <meta charset='utf-8'>
 <title>位面传送</title>
@@ -6,21 +8,14 @@
 
 
 <div id='app' class="container">
-<div class="page-header">
-    <h2>书签<small>让你的chrome书签活起来</small></h2> {{> loginButtons }}
-</div>
+    <div class="page-header">
+        <h2>书签<small>让你的chrome书签活起来</small></h2> {{> loginButtons }}
+    </div>
     <div class="row">
-        <div class="col-md-2 col-lg-2">
-            {{> brandList}}
-        </div>
-
-        <div  class="col-md-10 col-lg-10">
-            {{> postURL}}
-            <div id='url_alert'></div>
-            <div class="col-md-6 col-lg-6" id="sites">
-            </div>
-        </div>
+        {{> yield}}
     </div>
 </div>
+
 <div id='footer' class="panel-footer">create by Bigzhu for fun</div>
 </body>
+</template>
