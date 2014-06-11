@@ -3,7 +3,7 @@ Router.configure({
 })
 
 Router.map(->
-  this.route('bookMarkList', {path: '/'})
+  this.route('col', {path: '/'})
 )
 
 Meteor.Router.add('/add', 'POST', ->
