@@ -31,10 +31,10 @@ function post(url, data){
 }
 
 function add(id, bookmarks){
+    console.log(bookmarks)
     post("http://0.0.0.0:3000/add", JSON.stringify(bookmarks));
 }
 function remove(id, bookmarks){
-    bookmarks.id=id;
     post("http://0.0.0.0:3000/remove", JSON.stringify(bookmarks));
 }
 function update(id, bookmarks){

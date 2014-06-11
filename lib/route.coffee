@@ -7,10 +7,10 @@ Router.map(->
 )
 
 Meteor.Router.add('/add', 'POST', ->
-  console.log('add')
   bookmark = eval(this.request.body)
-  BookMarks.insert(bookmark)
-  console.log(bookmark)
+  if BookMarks.find({url:bookmark.url}).count() == 0
+    BookMarks.insert(bookmark)
+    console.log(bookmark)
 )
 Meteor.Router.add('/remove', 'POST', ->
   console.log('remove')
