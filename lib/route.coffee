@@ -20,12 +20,14 @@ Meteor.Router.add('/remove', 'POST', ->
 )
 
 cook = (node)->
-  #console.log(node)
   temp = new node.constructor()
+  isTag = false
   for key of node
     if key != 'children'
       temp[key] = node[key]
     else
+      if Tags.find({title:node.title}).count() == 0
+        Tags.insert({title:node.title})
       for i in node[key]
         cook(i)
   BookMarks.insert(temp)
