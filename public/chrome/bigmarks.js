@@ -51,9 +51,9 @@ function upload(){
             console.log(bookmarkTreeNodes);
             });
 }
-document.getElementById("id_upload").onclick = function() {
+document.getElementById("upload").onclick = function() {
     chrome.bookmarks.getTree(
             function(bookmarkTreeNodes) {
-            console.log(bookmarkTreeNodes);
+                post("http://0.0.0.0:3000/upload", JSON.stringify(bookmarkTreeNodes));
             });
 };
