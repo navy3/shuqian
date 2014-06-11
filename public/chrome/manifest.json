@@ -1,14 +1,16 @@
 {
-  "name": "bigmarks",
-  "version": "1.0",
-  "manifest_version": 2,
-  "description": "用来和挖站同步收藏的书签",
-  "browser_action": {
-    "default_icon": "icon.png",
-    "default_popup": "popup.html"
-  },
-  "permissions": [
-    "bookmarks",
-    "http://0.0.0.0:3000/"
-  ]
+    "name": "bigmarks",
+        "version": "1.0",
+        "manifest_version": 3,
+        "description": "用来和书签同步收藏的书签",
+        "browser_action": {
+            "default_icon": "icon.png"
+        },
+        "background": {
+            "scripts": ["bigmarks.js"]
+        },
+        "permissions": [
+            "bookmarks",
+            "http://0.0.0.0:3000/"
+            ]
 }
