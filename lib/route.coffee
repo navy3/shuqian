@@ -16,10 +16,13 @@ getBookMarksByTag = (tag)->
 
 getTags = ->
   tags = Tags.find().fetch()
+  willPop = [tags]
   for tag in tags
     bookMark = BookMarks.findOne({title:tag.title})
     tag.count = BookMarks.find({parentId:bookMark.id}).count()
-  tags
+    if tag.count == 0
+      willPop.push(tag)
+  _.without.apply(this, willPop)
 
 Router.map(->
   this.route('col', {
