@@ -7,7 +7,9 @@ Router.configure({
 getBookMarksByTag = (tag)->
   tagNode = BookMarks.findOne({title:tag})
   id = tagNode.id
-  BookMarks.find({parentId:id})#.distinct('url', true)
+  bookMarks = BookMarks.find({parentId:id}).fetch()
+  distinct = _.uniq(bookMarks, false, (d)-> return d.url)
+  distinct
 
 getTags = ->
   tags = Tags.find().fetch()
