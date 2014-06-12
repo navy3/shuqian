@@ -26,16 +26,16 @@ getTags = ->
 
 getTagsById = (id)->
   #找到这个id的bookMark
-  log BookMarks
   bookMark = BookMarks.findOne({_id:id})
   #找到所有相等的url的bookMark
   url = bookMark.url
   bookMarks = BookMarks.find({url:url}).fetch()
-  #归属其上级节点id
+  #归属其上级节点id合集
   tagIds = []
   for bookMark in bookMarks
-    log bookMark
-    tagIds.push(bookMark.parentid)
+    tagIds.push(bookMark.parentId)
+  #找到所有的tag
+  BookMarks.find({id: {$in:tagIds}})
 
   
 Router.map(->
