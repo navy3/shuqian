@@ -1,0 +1,14 @@
+
+<template name='bookMarkDetail'>
+<div class="col-md-12">
+    <h3>{{bookMark.title}}</h3>
+    <p>
+    <a href='{{bookMark.url}}'>{{bookMark.url}}</a>
+    </p>
+    <p>
+    {{#each tags}}
+        <span class="badge">{{title}}</span>
+    {{/each}}
+    </p>
+</div>
+</template>

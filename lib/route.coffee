@@ -6,9 +6,9 @@ Router.configure({
 
 getBookMarksByTag = (tag)->
   tagNode = BookMarks.findOne({title:tag})
-  #会调二次,要解决,很奇怪
-  if !tagNode
-    return
+  #会调二次,要解决,很奇怪(route没有wait导致的)
+  #if !tagNode
+  #  return
   id = tagNode.id
   bookMarks = BookMarks.find({parentId:id}).fetch()
   distinct = _.uniq(bookMarks, false, (d)-> return d.url)
@@ -24,9 +24,24 @@ getTags = ->
       willPop.push(tag)
   _.without.apply(this, willPop)
 
+getTagsById = (id)->
+  #找到这个id的bookMark
+  log BookMarks
+  bookMark = BookMarks.findOne({_id:id})
+  #找到所有相等的url的bookMark
+  url = bookMark.url
+  bookMarks = BookMarks.find({url:url}).fetch()
+  #归属其上级节点id
+  tagIds = []
+  for bookMark in bookMarks
+    log bookMark
+    tagIds.push(bookMark.parentid)
+
+  
 Router.map(->
   this.route('col', {
     path: '/tag/:_tag',
+    waitOn: -> Meteor.subscribe('bookMarks'),
     data: ->
       {
         bookMarks: getBookMarksByTag(@params._tag),
@@ -41,12 +56,13 @@ Router.map(->
         tags: getTags()
       }
     })
-  this.route('col', {
+  this.route('bookMarkDetail', {
     path: '/bookMarkDetail/:_id',
+    waitOn: -> Meteor.subscribe('bookMarks'),
     data: ->
       {
-        bookMarks: BookMarks.find(),
-        tags: getTags()
+        bookMark: BookMarks.findOne({_id:@params._id}),
+        tags: getTagsById(@params._id)
       }
     })
 )
