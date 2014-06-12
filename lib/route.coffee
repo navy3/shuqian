@@ -26,7 +26,7 @@ cook = (node)->
     if key != 'children'
       temp[key] = node[key]
     else
-      if Tags.find({title:node.title}).count() == 0
+      if Tags.find({title:node.title}).count() == 0 and node.title!=''
         Tags.insert({title:node.title})
       for i in node[key]
         cook(i)
