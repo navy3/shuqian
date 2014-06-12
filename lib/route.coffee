@@ -6,6 +6,9 @@ Router.configure({
 
 getBookMarksByTag = (tag)->
   tagNode = BookMarks.findOne({title:tag})
+  #会调二次,要解决,很奇怪
+  if !tagNode
+    return
   id = tagNode.id
   bookMarks = BookMarks.find({parentId:id}).fetch()
   distinct = _.uniq(bookMarks, false, (d)-> return d.url)
@@ -29,6 +32,14 @@ Router.map(->
   })
   this.route('col', {
     path: '/',
+    data: ->
+      {
+        bookMarks: BookMarks.find(),
+        tags: getTags()
+      }
+    })
+  this.route('col', {
+    path: '/bookMarkDetail/:_id',
     data: ->
       {
         bookMarks: BookMarks.find(),
