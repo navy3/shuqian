@@ -4,19 +4,25 @@ Router.configure({
   layoutTemplate: 'main'
 })
 
-findBookMarksByTag = (tag)->
+getBookMarksByTag = (tag)->
   tagNode = BookMarks.findOne({title:tag})
   id = tagNode.id
-  log id
-  BookMarks.find({parentId:id})
+  BookMarks.find({parentId:id})#.distinct('url', true)
+
+getTags = ->
+  tags = Tags.find().fetch()
+  for tag in tags
+    bookMark = BookMarks.findOne({title:tag.title})
+    tag.count = BookMarks.find({parentId:bookMark.id}).count()
+  tags
 
 Router.map(->
   this.route('col', {
     path: '/tag/:_tag',
     data: ->
       {
-        bookMarks: findBookMarksByTag(@params._tag),
-        tags: Tags.find()
+        bookMarks: getBookMarksByTag(@params._tag),
+        tags: getTags()
       }
   })
   this.route('col', {
@@ -24,7 +30,7 @@ Router.map(->
     data: ->
       {
         bookMarks: BookMarks.find(),
-        tags: Tags.find()
+        tags: getTags()
       }
     })
 )
