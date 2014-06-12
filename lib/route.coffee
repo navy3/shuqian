@@ -30,7 +30,8 @@ cook = (node)->
         Tags.insert({title:node.title})
       for i in node[key]
         cook(i)
-  BookMarks.insert(temp)
+  if BookMarks.find(temp).count() == 0
+    BookMarks.insert(temp)
 
 Meteor.Router.add('/upload', 'POST', ->
   console.log('upload')
