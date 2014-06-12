@@ -1,4 +1,4 @@
-Template.bookMarkList.helpers({
-  bookMarks: ->
-    return BookMarks.find()
-})
+#Template.bookMarkList.helpers({
+#  bookMarks: ->
+#    return BookMarks.find()
+#})

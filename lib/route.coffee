@@ -1,9 +1,32 @@
+log = (parm)-> console.log parm
+
 Router.configure({
   layoutTemplate: 'main'
 })
 
+findBookMarksByTag = (tag)->
+  tagNode = BookMarks.findOne({title:tag})
+  id = tagNode.id
+  log id
+  BookMarks.find({parentId:id})
+
 Router.map(->
-  this.route('col', {path: '/'})
+  this.route('col', {
+    path: '/tag/:_tag',
+    data: ->
+      {
+        bookMarks: findBookMarksByTag(@params._tag),
+        tags: Tags.find()
+      }
+  })
+  this.route('col', {
+    path: '/',
+    data: ->
+      {
+        bookMarks: BookMarks.find(),
+        tags: Tags.find()
+      }
+    })
 )
 
 Meteor.Router.add('/add', 'POST', ->
@@ -38,6 +61,3 @@ Meteor.Router.add('/upload', 'POST', ->
   bookmark = eval(this.request.body)
   cook(bookmark[0])
 )
-
-      
-

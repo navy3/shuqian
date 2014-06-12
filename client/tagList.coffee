@@ -1,4 +1,4 @@
-Template.tagList.helpers({
-  tags: ->
-    return Tags.find()
-})
+#Template.tagList.helpers({
+#  tags: ->
+#    return Tags.find()
+#})
