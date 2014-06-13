@@ -19,6 +19,8 @@ getTags = ->
   willPop = [tags]
   for tag in tags
     bookMark = BookMarks.findOne({title:tag.title})
+    if !bookMark
+      continue
     tag.count = BookMarks.find({parentId:bookMark.id}).count()
     if tag.count == 0
       willPop.push(tag)
@@ -41,16 +43,18 @@ getTagsById = (id)->
 Router.map(->
   this.route('col', {
     path: '/',
+    waitOn: -> [Meteor.subscribe('bookMarks'), Meteor.subscribe('tags')],
     data: ->
       {
         bookMarks: BookMarks.find(),
         tags: getTags()
+        #tags: Tags.find()
       }
   })
 
   this.route('col', {
     path: '/tag/:_tag',
-    waitOn: -> Meteor.subscribe('bookMarks'),
+    waitOn: -> [Meteor.subscribe('bookMarks'), Meteor.subscribe('tags')],
     data: ->
       {
         bookMarks: getBookMarksByTag(@params._tag),
