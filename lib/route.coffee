@@ -40,6 +40,15 @@ getTagsById = (id)->
   
 Router.map(->
   this.route('col', {
+    path: '/',
+    data: ->
+      {
+        bookMarks: BookMarks.find(),
+        tags: getTags()
+      }
+  })
+
+  this.route('col', {
     path: '/tag/:_tag',
     waitOn: -> Meteor.subscribe('bookMarks'),
     data: ->
@@ -48,14 +57,7 @@ Router.map(->
         tags: getTags()
       }
   })
-  this.route('col', {
-    path: '/',
-    data: ->
-      {
-        bookMarks: BookMarks.find(),
-        tags: getTags()
-      }
-    })
+
   this.route('bookMarkDetail', {
     path: '/bookMarkDetail/:_id',
     waitOn: -> Meteor.subscribe('bookMarks'),
@@ -64,7 +66,7 @@ Router.map(->
         bookMark: BookMarks.findOne({_id:@params._id}),
         tags: getTagsById(@params._id)
       }
-    })
+  })
 )
 
 Meteor.Router.add('/add', 'POST', ->
