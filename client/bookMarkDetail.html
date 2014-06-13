@@ -1,15 +1,20 @@
 
 <template name='bookMarkDetail'>
 <div class="col-md-12">
-    <h3>{{bookMark.title}}</h3>
-    <p>
-    <a href='{{bookMark.url}}'>{{bookMark.url}}</a>
-    </p>
-    <p>
-    {{#each tags}}
-    <a href="/tag/{{title}}"><span class="badge">{{title}}</span></a>
-    {{/each}}
-    </p>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <img src="http://www.google.com/s2/favicons?domain={{domain}}"/>{{bookMark.title}}
+            <p>
+            <a href='{{bookMark.url}}'>{{bookMark.url}}</a>
+            </p>
+            <p>
+            <span class="glyphicon glyphicon-star size"></span>
+            {{#each tags}}
+            <a href="/tag/{{title}}"><span class="badge">{{title}}</span></a>
+            {{/each}}
+            </p>
+        </div>
+    </div>
 </div>
 {{>disqus}}
 </template>

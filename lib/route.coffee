@@ -64,7 +64,7 @@ Router.map(->
 
   this.route('bookMarkDetail', {
     path: '/bookMarkDetail/:_id',
-    waitOn: -> Meteor.subscribe('bookMarks'),
+    waitOn: -> [Meteor.subscribe('bookMarks'), Meteor.subscribe('tags')],
     data: ->
       {
         bookMark: BookMarks.findOne({_id:@params._id}),
