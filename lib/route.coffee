@@ -1,5 +1,4 @@
 log = (parm)-> console.log parm
-
 Router.configure({
   layoutTemplate: 'main'
 })
@@ -36,6 +35,18 @@ getTagsById = (id)->
     tagIds.push(bookMark.parentId)
   #找到所有的tag
   BookMarks.find({id: {$in:tagIds}})
+getTagsByURL = (url)->
+  url = decodeURIComponent(url)
+  bookMarks = BookMarks.find({url:url}).fetch()
+  #归属其上级节点id合集
+  tagIds = []
+  for bookMark in bookMarks
+    tagIds.push(bookMark.parentId)
+  #找到所有的tag
+  BookMarks.find({id: {$in:tagIds}})
+getBookMarkByURL = (url)->
+  url = decodeURIComponent(url)
+  BookMarks.findOne({url:url})
 
   
 Router.map(->
@@ -59,12 +70,12 @@ Router.map(->
   })
 
   this.route('bookMarkDetail', {
-    path: '/bookMarkDetail/:_id',
+    path: '/bookMarkDetail/:_url',
     waitOn: -> Meteor.subscribe('bookMarks'),
     data: ->
       {
-        bookMark: BookMarks.findOne({_id:@params._id}),
-        tags: getTagsById(@params._id)
+        bookMark: getBookMarkByURL(@params._url),
+        tags: getTagsByURL(@params._url)
       }
   })
 )
