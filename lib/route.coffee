@@ -83,7 +83,7 @@ Meteor.Router.add('/remove', 'POST', ->
   console.log('remove')
   bookmark = eval(this.request.body)
   BookMarks.remove({index:bookmark.index})
-  console.log(bookmark[0])
+  console.log(bookmark)
 )
 
 cook = (node)->
@@ -104,4 +104,11 @@ Meteor.Router.add('/upload', 'POST', ->
   console.log('upload')
   bookmark = eval(this.request.body)
   cook(bookmark[0])
+)
+
+Meteor.Router.add('/update', 'POST', ->
+  console.log('update')
+  bookmark = eval(this.request.body)
+  log bookmark
+  BookMarks.update({id:bookmark.id}, {$set:{index:bookmark.index, parentId:bookmark.parentId}})
 )
