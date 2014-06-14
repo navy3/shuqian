@@ -39,6 +39,16 @@ getTagsById = (id)->
   #找到所有的tag
   BookMarks.find({id: {$in:tagIds}})
 
+getTagsByURL = (url)->
+  url = decodeURIComponent(url)
+  bookMarks = BookMarks.find({url:url}).fetch()
+  #归属其上级节点id合集
+  tagIds = []
+  for bookMark in bookMarks
+    tagIds.push(bookMark.parentId)
+  #找到所有的tag
+  BookMarks.find({id: {$in:tagIds}})
+
   
 Router.map(->
   this.route('col', {
@@ -63,12 +73,12 @@ Router.map(->
   })
 
   this.route('bookMarkDetail', {
-    path: '/bookMarkDetail/:_id',
+    path: '/d/:_url',
     waitOn: -> [Meteor.subscribe('bookMarks'), Meteor.subscribe('tags')],
     data: ->
       {
-        bookMark: BookMarks.findOne({_id:@params._id}),
-        tags: getTagsById(@params._id)
+        bookMark: BookMarks.findOne({url:decodeURIComponent(@params._url)}),
+        tags: getTagsByURL(@params._url)
       }
   })
 )
