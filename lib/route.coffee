@@ -24,7 +24,9 @@ getTags = ->
     tag.count = BookMarks.find({parentId:bookMark.id}).count()
     if tag.count == 0
       willPop.push(tag)
-  _.without.apply(this, willPop)
+  tags = _.without.apply(this, willPop)
+  tags = _.sortBy(tags, (data)-> return data.count)
+  tags
 
 getTagsById = (id)->
   #找到这个id的bookMark
