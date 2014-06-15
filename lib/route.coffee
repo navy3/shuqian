@@ -50,6 +50,17 @@ getTagsByURL = (url)->
     tagIds.push(bookMark.parentId)
   #找到所有的tag
   BookMarks.find({id: {$in:tagIds}})
+getBookMarksBySearch = (value)->
+  return BookMarks.find({'$or' : [
+    { 'url':{'$regex':value} },
+    { 'title':{'$regex':value} }, ]
+  })
+getBookMarks = ->
+  log $('input').val()
+  if $('input').val() != ''
+    return BookMarks.find({title:'我的工作台'})
+  else
+    return BookMarks.find()
 
   
 Router.map(->
@@ -59,8 +70,19 @@ Router.map(->
     data: ->
       {
         bookMarks: BookMarks.find(),
+        #bookMarks: getBookMarks(),
         tags: getTags()
         #tags: Tags.find()
+      }
+  })
+
+  this.route('col', {
+    path: '/search/:_value',
+    waitOn: -> [Meteor.subscribe('bookMarks'), Meteor.subscribe('tags')],
+    data: ->
+      {
+        bookMarks: getBookMarksBySearch(@params._value),
+        tags: getTags()
       }
   })
 
