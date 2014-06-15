@@ -4,6 +4,9 @@ Router.configure({
   layoutTemplate: 'main'
 })
 
+distinctBookmarks = (bookMarks)->
+  _.uniq(bookMarks, false, (d)-> return d.url)
+
 getBookMarksByTag = (tag)->
   tagNode = BookMarks.findOne({title:tag})
   #会调二次,要解决,很奇怪(route没有wait导致的)
@@ -11,9 +14,7 @@ getBookMarksByTag = (tag)->
   #  return
   id = tagNode.id
   bookMarks = BookMarks.find({parentId:id}).fetch()
-  distinct = _.uniq(bookMarks, false, (d)-> return d.url)
-  distinct
-
+  distinctBookmarks(bookMarks)
 getTags = ->
   tags = Tags.find().fetch()
   willPop = [tags]
@@ -51,16 +52,11 @@ getTagsByURL = (url)->
   #找到所有的tag
   BookMarks.find({id: {$in:tagIds}})
 getBookMarksBySearch = (value)->
-  return BookMarks.find({'$or' : [
+  bookMarks = BookMarks.find({'$or' : [
     { 'url':{'$regex':value} },
     { 'title':{'$regex':value} }, ]
-  })
-getBookMarks = ->
-  log $('input').val()
-  if $('input').val() != ''
-    return BookMarks.find({title:'我的工作台'})
-  else
-    return BookMarks.find()
+  }).fetch()
+  return distinctBookmarks(bookMarks)
 
   
 Router.map(->
@@ -70,7 +66,6 @@ Router.map(->
     data: ->
       {
         bookMarks: BookMarks.find(),
-        #bookMarks: getBookMarks(),
         tags: getTags()
         #tags: Tags.find()
       }
