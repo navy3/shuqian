@@ -1,3 +1,10 @@
 <template name='bookMark'>
-<a href="/d/{{encodeURL}}" target="_blank" class="list-group-item"><div><img src="http://www.google.com/s2/favicons?domain={{domain}}"/>{{title}}</div><a href='{{url}}'><sub class='on-show pull-right clear'>{{url}}</sub></a></a>
+<a href="/d/{{encodeURL}}"  class="list-group-item">
+    <div>
+        <img src="http://www.google.com/s2/favicons?domain={{domain}}"/>{{title}}
+    </div>
+    <a href='{{url}}' target="_blank">
+        <sub class='on-show pull-right clear'>{{url}}</sub>
+    </a>
+</a>
 </template>

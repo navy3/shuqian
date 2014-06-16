@@ -61,7 +61,7 @@ getBookMarksBySearch = (value)->
 
   
 Router.map(->
-  this.route('col', {
+  this.route('bookMarkList', {
     path: '/',
     waitOn: -> [Meteor.subscribe('bookMarks'), Meteor.subscribe('tags')],
     data: ->
@@ -72,7 +72,7 @@ Router.map(->
       }
   })
 
-  this.route('col', {
+  this.route('bookMarkList', {
     path: '/search/:_value',
     waitOn: -> [Meteor.subscribe('bookMarks'), Meteor.subscribe('tags')],
     data: ->
@@ -82,7 +82,7 @@ Router.map(->
       }
   })
 
-  this.route('col', {
+  this.route('bookMarkList', {
     path: '/tag/:_tag',
     waitOn: -> [Meteor.subscribe('bookMarks'), Meteor.subscribe('tags')],
     data: ->
@@ -98,7 +98,8 @@ Router.map(->
     data: ->
       {
         bookMark: BookMarks.findOne({url:decodeURIComponent(@params._url)}),
-        tags: getTagsByURL(@params._url)
+        thisTags: getTagsByURL(@params._url),
+        tags: getTags()
       }
   })
 )
