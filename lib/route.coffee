@@ -22,7 +22,8 @@ getTags = ->
     bookMark = BookMarks.findOne({title:tag.title})
     if !bookMark
       continue
-    tag.count = BookMarks.find({parentId:bookMark.id}).count()
+    #tag.count = BookMarks.find({parentId:bookMark.id}).count()
+    tag.count = distinctBookmarks(BookMarks.find({parentId:bookMark.id}).fetch()).length
     if tag.count == 0
       willPop.push(tag)
   tags = _.without.apply(this, willPop)
