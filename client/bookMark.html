@@ -1,10 +1,18 @@
 <template name='bookMark'>
-<a href="/d/{{encodeURL}}"  class="list-group-item">
-    <div>
-        <img src="http://www.google.com/s2/favicons?domain={{domain}}"/>{{title}}
-    </div>
-    <a href='{{url}}' target="_blank">
-        <sub class='on-show pull-right clear'>{{url}}</sub>
-    </a>
-</a>
+<tr>
+    <td><input type="checkbox"/></td>
+    <td>
+        <a href="{{url}}" target="_bank">
+            <img src="http://www.google.com/s2/favicons?domain={{domain}}"/>
+        </a>
+        <a href="/d/{{encodeURL}}">
+            {{title}}
+        </a>
+    </td>
+    <td>
+        <a class='pull-right on-show'>
+            <button type="button" class="btn btn-default btn-xs remove"><span data-id="{{_id}}" class="glyphicon glyphicon-remove"></span></button>
+        </a>
+    </td>
+</tr>
 </template>

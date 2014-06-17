@@ -1,7 +1,20 @@
 <template name='bookMarkList'>
-<ul class="list-group">
-  {{#each bookMarks}}
-      {{> bookMark}}
+<button id='editor' type="button" class="btn btn-default ">
+    <span class="glyphicon glyphicon-star"></span>编辑
+</button>
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    {{#each bookMarks}}
+    {{> bookMark}}
     {{/each}}
-</ul>
+
+    </tbody>
+</table>
 </template>
