@@ -1,5 +1,5 @@
 Template.main.events = {
-  'keyup input':  (evt, template)->
+  'keyup #search':  (evt, template)->
     value = $(evt.target).val()
     if value == ''
       Router.go('/')
